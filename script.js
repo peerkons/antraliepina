@@ -289,3 +289,21 @@ explosions.forEach((explosion, index) => {
         explosions.splice(index, 1);
     }
 });
+
+// ... existing JavaScript ...
+
+// Use 'touchstart' event for mobile compatibility
+leftBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevent default touch behavior
+    player.x -= 10;
+}, { passive: false });
+
+rightBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    player.x += 10;
+}, { passive: false });
+
+shootBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    shoot(player.x + player.width / 2, player.y);
+}, { passive: false });
