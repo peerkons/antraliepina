@@ -235,3 +235,57 @@ canvas.addEventListener('click', restartGame);
 
 // Call startGame to initialize the game
 startGame();
+
+
+// ... existing JavaScript content ...
+
+class Explosion {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.sprites = []; // Array to hold explosion sprites
+        this.index = 0; // Current sprite index
+        this.done = false; // Flag to check if animation is complete
+    }
+
+    draw() {
+        if (this.done) return;
+
+        ctx.drawImage(this.sprites[this.index], this.x, this.y);
+        if (++this.index >= this.sprites.length) {
+            this.done = true;
+        }
+    }
+}
+
+let explosions = [];
+
+function playSoundEffect(soundFile) {
+    const sound = new Audio(soundFile);
+    sound.play();
+}
+
+// ... existing code ...
+
+// Update collision logic to include sound and visual effects
+enemies.forEach((enemy, enemyIndex) => {
+    if (detectCollision(projectile, enemy)) {
+        setTimeout(() => {
+            enemies.splice(enemyIndex, 1);
+            projectiles.splice(index, 1);
+            explosions.push(new Explosion(enemy.x, enemy.y));
+            playSoundEffect('hitSound.mp3'); // Replace with actual sound file path
+            score += 10; // Increase score
+        }, 0);
+    }
+});
+
+// ... existing animate function ...
+
+// Draw explosions
+explosions.forEach((explosion, index) => {
+    explosion.draw();
+    if (explosion.done) {
+        explosions.splice(index, 1);
+    }
+});
