@@ -102,3 +102,14 @@ function animate() {
 
 animate();
 
+// ... existing JavaScript ...
+
+const leftBtn = document.getElementById('leftBtn');
+const rightBtn = document.getElementById('rightBtn');
+const shootBtn = document.getElementById('shootBtn');
+
+leftBtn.addEventListener('touchstart', () => player.x -= 10);
+rightBtn.addEventListener('touchstart', () => player.x += 10);
+shootBtn.addEventListener('touchstart', () => shoot(player.x + player.width / 2, player.y));
+
+// Update the animate function to include touch control functionality
