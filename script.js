@@ -193,3 +193,45 @@ function animate() {
 }
 
 animate();
+
+// Continuing from previous script.js content
+
+let animationId;
+
+// Start and Restart Game functions
+function startGame() {
+    gameOver = false;
+    score = 0;
+    enemies = [new Enemy(100, 100), new Enemy(200, 100)]; // Reset enemies
+    projectiles = [];
+    animate(); // Start animation loop
+}
+
+function restartGame() {
+    if (gameOver) {
+        startGame();
+    }
+}
+
+// Updated animate function with cancelAnimationFrame
+function animate() {
+    animationId = requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    player.draw();
+    // ... existing game logic ...
+
+    if (gameOver) {
+        cancelAnimationFrame(animationId);
+        // Display game over message and restart option
+        ctx.fillStyle = 'white';
+        ctx.font = '30px Arial';
+        ctx.fillText('Game Over! Score: ' + score, canvas.width / 2 - 100, canvas.height / 2);
+        ctx.fillText('Tap to Restart', canvas.width / 2 - 80, canvas.height / 2 + 40);
+    }
+}
+
+// Event listener for restarting the game
+canvas.addEventListener('click', restartGame);
+
+// Call startGame to initialize the game
+startGame();
