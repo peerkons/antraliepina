@@ -113,3 +113,83 @@ rightBtn.addEventListener('touchstart', () => player.x += 10);
 shootBtn.addEventListener('touchstart', () => shoot(player.x + player.width / 2, player.y));
 
 // Update the animate function to include touch control functionality
+
+
+// Continuing from previous script.js content
+
+let score = 0;
+let gameOver = false;
+
+// Update the Enemy class for movement
+class Enemy {
+    // ... existing properties ...
+    constructor(x, y) {
+        // ... existing setup ...
+        this.speedX = 1;
+        this.speedY = 0.3;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += Math.random() < 0.1 ? this.speedY : 0; // Drop down occasionally
+
+        // Change direction at canvas edges
+        if (this.x + this.width > canvas.width || this.x < 0) {
+            this.speedX = -this.speedX;
+            this.y += this.speedY;
+        }
+    }
+}
+
+// Collision detection function
+function detectCollision(projectile, enemy) {
+    // Simple AABB (Axis-Aligned Bounding Box) collision detection
+    return (
+        projectile.x + projectile.radius > enemy.x &&
+        projectile.x - projectile.radius < enemy.x + enemy.width &&
+        projectile.y + projectile.radius > enemy.y &&
+        projectile.y - projectile.radius < enemy.y + enemy.height
+    );
+}
+
+function animate() {
+    if (gameOver) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    player.draw();
+    enemies.forEach(enemy => {
+        enemy.update();
+        enemy.draw();
+
+        // Game over if enemy reaches the bottom
+        if (enemy.y + enemy.height >= canvas.height) {
+            gameOver = true;
+        }
+    });
+
+    projectiles.forEach((projectile, index) => {
+        projectile.update();
+
+        // Remove projectiles at canvas top
+        if (projectile.y + projectile.radius < 0) {
+            setTimeout(() => {
+                projectiles.splice(index, 1);
+            }, 0);
+        }
+
+        // Check for collisions
+        enemies.forEach((enemy, enemyIndex) => {
+            if (detectCollision(projectile, enemy)) {
+                setTimeout(() => {
+                    enemies.splice(enemyIndex, 1);
+                    projectiles.splice(index, 1);
+                    score += 10; // Increase score
+                }, 0);
+            }
+        });
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
