@@ -31,3 +31,27 @@ button {
     font-size: 16px;
     touch-action: manipulation; /* Improves responsiveness on touch devices */
 }
+
+
+/* ... existing CSS ... */
+
+@media screen and (max-width: 768px) {
+    canvas {
+        width: 100%; /* Adjust canvas size */
+        height: auto;
+    }
+
+    #controls {
+        width: 100%; /* Adjust control button sizes */
+        padding: 0 10px;
+    }
+
+    button {
+        flex-grow: 1; /* Make buttons expand to fill available space */
+    }
+}
+
+body, html {
+    overflow: hidden; /* Prevent scrolling */
+}
+
