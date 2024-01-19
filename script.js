@@ -45,3 +45,60 @@ function animate() {
 }
 
 animate();
+
+// Continuing from previous script.js content
+
+class Projectile {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 5;
+        this.color = 'white';
+        this.velocity = 2;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+
+    update() {
+        this.draw();
+        this.y -= this.velocity;
+    }
+}
+
+const projectiles = [];
+
+function shoot(x, y) {
+    projectiles.push(new Projectile(x, y));
+}
+
+window.addEventListener('keydown', function(e) {
+    if (e.code === 'ArrowLeft') {
+        player.x -= 10;
+    } else if (e.code === 'ArrowRight') {
+        player.x += 10;
+    } else if (e.code === 'Space') {
+        shoot(player.x + player.width / 2, player.y);
+    }
+});
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    player.draw();
+    enemies.forEach((enemy, index) => {
+        enemy.draw();
+        // Enemy movement logic here
+    });
+    projectiles.forEach((projectile, index) => {
+        projectile.update();
+        // Collision detection and removal logic here
+    });
+    requestAnimationFrame(animate);
+}
+
+animate();
+
