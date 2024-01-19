@@ -18,8 +18,9 @@ canvas {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
     gap: 10px;
+        display: flex;
+    justify-content: space-around; /* Ensures even spacing */
 }
 
 button {
@@ -30,6 +31,8 @@ button {
     border-radius: 5px;
     font-size: 16px;
     touch-action: manipulation; /* Improves responsiveness on touch devices */
+        /* ... existing styles ... */
+    flex: 1; /* Ensures buttons have equal width */
 }
 
 
