@@ -5,22 +5,22 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #000;
+    overflow: hidden; /* Prevent scrolling */
 }
 
 canvas {
     border: 1px solid white;
 }
 
-/* ... existing CSS ... */
-
 #controls {
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    gap: 10px;
-        display: flex;
+    display: flex;
     justify-content: space-around; /* Ensures even spacing */
+    width: 100%; /* Adjust control button sizes */
+    padding: 0 10px;
 }
 
 button {
@@ -31,12 +31,8 @@ button {
     border-radius: 5px;
     font-size: 16px;
     touch-action: manipulation; /* Improves responsiveness on touch devices */
-        /* ... existing styles ... */
     flex: 1; /* Ensures buttons have equal width */
 }
-
-
-/* ... existing CSS ... */
 
 @media screen and (max-width: 768px) {
     canvas {
@@ -44,17 +40,7 @@ button {
         height: auto;
     }
 
-    #controls {
-        width: 100%; /* Adjust control button sizes */
-        padding: 0 10px;
-    }
-
     button {
         flex-grow: 1; /* Make buttons expand to fill available space */
     }
 }
-
-body, html {
-    overflow: hidden; /* Prevent scrolling */
-}
-
